@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir -p harness/dsh-plugins
           mv plugin harness/dsh-plugins/dsh-ui-background
-          echo '  - dsh-plugins/*' >> harness/pnpm-workspace.yaml
+          sed -i '/^linkWorkspacePackages:/i\  - dsh-plugins/*' harness/pnpm-workspace.yaml
 
       - name: Install harness workspace
         working-directory: harness
