@@ -1,6 +1,3 @@
 node_modules/
 *.tsbuildinfo
-lib/client.js.map
-lib/types/**/*.js
-lib/types/**/*.js.map
-lib/types/**/*.d.ts.map
+lib/
