@@ -1,0 +1,8 @@
+# UI background bundle patch. Add this bundle to a web profile (after
+# @deepseek-ai/dsh-web-app) to mount the background-image plugin: its Host half
+# registers the ui-background settings namespace; its browser half renders the
+# Appearance upload row and projects the persisted image onto the theme token
+# --dsw-alias-bg-image consumed by the shell surfaces.
+- insert:
+    - id: ui-background
+      name: 'dsh-ui-background'
