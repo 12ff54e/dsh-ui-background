@@ -1,7 +1,6 @@
 name: release
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -13,16 +12,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out plugin
-        uses: actions/checkout@v4
-        with:
-          path: plugin
-
-      - name: Check out deepseek-harness
-        uses: actions/checkout@v4
-        with:
-          repository: deepseek-ai/deepseek-harness
-          path: harness
+      - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
@@ -31,38 +21,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
-          cache-dependency-path: harness/pnpm-lock.yaml
-
-      - name: Move plugin into the harness workspace
-        run: |
-          mkdir -p harness/dsh-plugins
-          mv plugin harness/dsh-plugins/dsh-ui-background
-          sed -i '/^linkWorkspacePackages:/i\  - dsh-plugins/*' harness/pnpm-workspace.yaml
-
-      - name: Debug workspace file
-        run: |
-          sed -n '1,35p' harness/pnpm-workspace.yaml
-          ls -la harness/dsh-plugins/dsh-ui-background
-
-      - name: Install harness workspace
-        working-directory: harness
-        run: pnpm install --no-frozen-lockfile
-
-      - name: Debug plugin node_modules
-        run: |
-          ls -la harness/dsh-plugins/dsh-ui-background/node_modules || true
-          ls -la harness/dsh-plugins/dsh-ui-background/node_modules/@deepseek-ai || true
-
-      - name: Build plugin
-        working-directory: harness/dsh-plugins/dsh-ui-background
-        run: pnpm run build
 
       - name: Pack plugin tarball
-        working-directory: harness/dsh-plugins/dsh-ui-background
-        run: pnpm pack
+        run: |
+          mkdir -p dist
+          pnpm pack --pack-destination dist
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          files: harness/dsh-plugins/dsh-ui-background/dsh-ui-background-*.tgz
+          files: dist/dsh-ui-background-*.tgz
