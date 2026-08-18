@@ -1,6 +1,7 @@
 name: release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -39,9 +40,19 @@ jobs:
           mv plugin harness/dsh-plugins/dsh-ui-background
           sed -i '/^linkWorkspacePackages:/i\  - dsh-plugins/*' harness/pnpm-workspace.yaml
 
+      - name: Debug workspace file
+        run: |
+          sed -n '1,35p' harness/pnpm-workspace.yaml
+          ls -la harness/dsh-plugins/dsh-ui-background
+
       - name: Install harness workspace
         working-directory: harness
         run: pnpm install --no-frozen-lockfile
+
+      - name: Debug plugin node_modules
+        run: |
+          ls -la harness/dsh-plugins/dsh-ui-background/node_modules || true
+          ls -la harness/dsh-plugins/dsh-ui-background/node_modules/@deepseek-ai || true
 
       - name: Build plugin
         working-directory: harness/dsh-plugins/dsh-ui-background
