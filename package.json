@@ -1,7 +1,7 @@
 {
   "name": "dsh-ui-background",
   "description": "Web UI background-image plugin: browser-local user settings for the page background plus the Appearance upload row that applies it through the theme override token",
-  "version": "0.1.0-rc.5",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },

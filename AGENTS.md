@@ -51,7 +51,7 @@ published npm packages on `v*` tags:
 
 ```sh
 dsh plugin --profile web add \
-  https://github.com/12ff54e/dsh-ui-background/releases/download/v0.1.0-rc.5/dsh-ui-background-0.1.0-rc.5.tgz
+  https://github.com/12ff54e/dsh-ui-background/releases/download/v0.1.0/dsh-ui-background-0.1.0.tgz
 ```
 
 ## Pitfalls
